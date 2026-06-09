@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Surface Pro Cleaning | Pressure Washing in South Yorkshire</title>
+<meta name="description" content="Surface Pro Cleaning — professional pressure washing of driveways, patios and paving across South Yorkshire. Free quotes. Call Jake on +44 7984 729334." />
+<style>
+  :root{
+    --blue-900:#003078;   /* deep navy (logo shadows) */
+    --blue-700:#0060c0;   /* cobalt (overalls) - primary */
+    --blue-500:#1e7fd4;
+    --sky:#60c0d8;        /* cyan (water/bubbles) */
+    --yellow:#f0a800;     /* pressure-washer yellow */
+    --yellow-bright:#ffc02e;
+    --ink:#0e1116;
+    --muted:#5b6470;
+    --paper:#ffffff;
+    --soft:#f3f7fb;
+    --line:#e3eaf2;
+    --shadow:0 10px 30px rgba(11,95,165,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--paper);line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{width:min(1120px,92%);margin:0 auto}
+  .btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:.85rem 1.5rem;border-radius:999px;font-weight:700;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{background:var(--yellow);color:var(--ink);box-shadow:0 6px 18px rgba(255,193,7,.4)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,193,7,.5)}
+  .btn-ghost{border:2px solid rgba(255,255,255,.7);color:#fff}
+  .btn-ghost:hover{background:rgba(255,255,255,.12)}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,61,98,.96);backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0}
+  .brand{display:flex;align-items:center;gap:.7rem;color:#fff}
+  .brand img{height:48px;width:48px;border-radius:10px;object-fit:cover;background:#000}
+  .brand b{font-size:1.15rem;letter-spacing:.2px}
+  .brand span{display:block;font-size:.72rem;color:var(--yellow-bright);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+  .nav-links{display:flex;align-items:center;gap:1.6rem}
+  .nav-links a{color:#dbe9f6;font-weight:600;font-size:.95rem}
+  .nav-links a:hover{color:#fff}
+  .nav .btn{padding:.55rem 1.1rem;font-size:.9rem}
+  .menu-toggle{display:none;background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;color:#fff;
+    background:
+      linear-gradient(120deg, rgba(10,61,98,.92), rgba(11,95,165,.78)),
+      radial-gradient(circle at 80% 20%, rgba(41,182,246,.5), transparent 55%);
+    padding:5rem 0 5.5rem;overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:auto 0 -1px 0;height:60px;
+    background:var(--paper);
+    clip-path:polygon(0 100%,100% 100%,100% 0,0 60%);
+  }
+  .hero h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;font-weight:800;max-width:14ch}
+  .hero h1 .hl{color:var(--yellow-bright)}
+  .hero p{margin:1.2rem 0 2rem;font-size:1.15rem;max-width:48ch;color:#e7f1fb}
+  .hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+  .badges{display:flex;gap:1.4rem;flex-wrap:wrap;margin-top:2.6rem;color:#dceafc;font-weight:600;font-size:.95rem}
+  .badges div{display:flex;align-items:center;gap:.5rem}
+  .badges .dot{width:9px;height:9px;border-radius:50%;background:var(--yellow)}
+
+  /* Mascot hero layout */
+  .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center;position:relative;z-index:2}
+  .hero-mascot{position:relative;display:flex;justify-content:center;align-items:flex-end}
+  .hero-mascot img{
+    width:min(400px,86%);height:auto;
+    filter:drop-shadow(0 22px 32px rgba(0,16,40,.45));
+    animation:float 5s ease-in-out infinite;
+  }
+  .splash-badge{
+    position:absolute;top:0;right:6%;z-index:3;
+    width:104px;height:104px;border-radius:50%;
+    background:var(--yellow);color:var(--ink);border:5px solid #fff;
+    display:grid;place-items:center;text-align:center;line-height:1.05;
+    font-weight:900;font-size:1rem;letter-spacing:.5px;
+    transform:rotate(-12deg);box-shadow:0 10px 22px rgba(0,0,0,.3);
+    animation:pop 4s ease-in-out infinite;
+  }
+  /* Rising bubbles */
+  .bubbles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+  .bubbles span{
+    position:absolute;bottom:-60px;border-radius:50%;
+    background:radial-gradient(circle at 32% 30%, rgba(255,255,255,.95), rgba(96,192,216,.25));
+    opacity:0;animation-name:rise;animation-timing-function:linear;animation-iteration-count:infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  @keyframes pop{0%,100%{transform:rotate(-12deg) scale(1)}50%{transform:rotate(-12deg) scale(1.06)}}
+  @keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.7}100%{transform:translateY(-440px);opacity:0}}
+  @media(prefers-reduced-motion:reduce){
+    .hero-mascot img,.splash-badge,.bubbles span{animation:none}
+    .splash-badge{transform:rotate(-12deg)}
+  }
+
+  /* ---------- Sections ---------- */
+  section{padding:4.5rem 0}
+  .eyebrow{color:var(--blue-700);font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:.8rem}
+  h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;margin:.4rem 0 1rem}
+  .lead{color:var(--muted);font-size:1.08rem;max-width:65ch}
+
+  /* What we do */
+  .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem;margin-top:2.5rem}
+  .card{
+    background:var(--soft);border:1px solid var(--line);border-radius:18px;padding:1.6rem;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .card .ico{
+    width:52px;height:52px;border-radius:14px;display:grid;place-items:center;margin-bottom:1rem;
+    background:linear-gradient(135deg,var(--blue-500),var(--sky));color:#fff;
+  }
+  .card h3{font-size:1.15rem;margin-bottom:.4rem}
+  .card p{color:var(--muted);font-size:.96rem}
+
+  /* Gallery slider */
+  #gallery{background:var(--soft)}
+  .slider{
+    position:relative;max-width:620px;margin:2.4rem auto 0;
+    border-radius:20px;overflow:hidden;background:#fff;
+    border:1px solid var(--line);box-shadow:var(--shadow);
+  }
+  .slides{display:flex;transition:transform .45s ease}
+  .slide{min-width:100%;margin:0;position:relative}
+  .slide img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;background:#dbe7f2}
+  .slide figcaption{
+    position:absolute;left:0;right:0;bottom:0;
+    display:flex;align-items:center;justify-content:space-between;gap:.6rem;
+    padding:1.4rem 1.1rem .9rem;color:#fff;
+    background:linear-gradient(transparent,rgba(0,16,40,.85));
+  }
+  .slide figcaption b{font-size:1.05rem}
+  .nav-btn{
+    position:absolute;top:calc(50% - 22px);transform:translateY(-50%);
+    width:46px;height:46px;border-radius:50%;border:0;cursor:pointer;
+    background:rgba(0,48,120,.55);color:#fff;font-size:1.1rem;
+    display:grid;place-items:center;transition:background .2s,transform .15s;
+    backdrop-filter:blur(2px);
+  }
+  .nav-btn:hover{background:var(--blue-700);transform:translateY(-50%) scale(1.08)}
+  .nav-btn:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+  .prev{left:12px}
+  .next{right:12px}
+  .dots{display:flex;justify-content:center;gap:.55rem;margin-top:1.1rem}
+  .dots button{
+    width:11px;height:11px;border-radius:50%;border:0;padding:0;cursor:pointer;
+    background:#c4d3e2;transition:background .2s,transform .2s;
+  }
+  .dots button.active{background:var(--yellow);transform:scale(1.25)}
+  .pill{background:var(--yellow);color:var(--ink);font-weight:800;font-size:.72rem;padding:.25rem .65rem;border-radius:999px;text-transform:uppercase;letter-spacing:.5px}
+
+  /* Contact */
+  #contact{
+    color:#fff;
+    background:linear-gradient(120deg,var(--blue-900),var(--blue-700));
+  }
+  .contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center}
+  #contact h2{color:#fff}
+  #contact .lead{color:#d7e6f5}
+  .contact-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:2rem}
+  .crow{display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.12)}
+  .crow:last-child{border-bottom:0}
+  .crow .ci{width:46px;height:46px;border-radius:12px;background:var(--yellow);color:var(--ink);display:grid;place-items:center;flex:none}
+  .crow small{display:block;color:#bcd4ea;font-size:.78rem;text-transform:uppercase;letter-spacing:1px}
+  .crow b{font-size:1.15rem}
+  .phone-big{margin-top:1.6rem}
+  .phone-big .btn{width:100%;justify-content:center;font-size:1.1rem;padding:1rem}
+
+  footer{background:var(--ink);color:#9fb2c4;text-align:center;padding:2rem 0;font-size:.9rem}
+  footer b{color:#fff}
+
+  svg.icn{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ----- Mobile ----- */
+  @media(max-width:860px){
+    .hero{padding:2.5rem 0 3.5rem}
+    .hero-inner{grid-template-columns:1fr;text-align:center;gap:1rem}
+    .hero-mascot{order:-1}                 /* mascot up top on mobile = fun first impression */
+    .hero-mascot img{width:min(280px,72%)}
+    .splash-badge{width:84px;height:84px;font-size:.82rem;right:12%;top:-4px}
+    .hero h1{max-width:none;margin:0 auto}
+    .hero p{margin:1rem auto 1.6rem}
+    .hero-cta{justify-content:center}
+    .badges{justify-content:center;gap:1rem 1.2rem;margin-top:1.8rem}
+    section{padding:3rem 0}
+    .gallery-top{padding-top:2rem}
+  }
+  @media(max-width:480px){
+    .wrap{width:90%}
+    .brand b{font-size:1rem}
+    .brand span{font-size:.62rem}
+    .brand img{height:42px;width:42px}
+    .hero-cta .btn{width:100%;justify-content:center}
+    .hero p{font-size:1.02rem}
+    h2{font-size:1.45rem}
+    .slider{max-width:100%}
+    .nav-btn{width:40px;height:40px}
+  }
+
+  @media(max-width:780px){
+    .nav-links{
+      position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;
+      gap:1rem;padding:1.2rem 5%;background:var(--blue-900);display:none;
+    }
+    .nav-links.open{display:flex}
+    .menu-toggle{display:block}
+    .contact-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <img data-img="logo" src="images/logo.png" alt="Surface Pro Cleaning logo" />
+      <div>
+        <b>Surface Pro Cleaning</b>
+        <span>Pressure Washing • South Yorkshire</span>
+      </div>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#services">What we do</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+      <a class="btn btn-primary" href="tel:+447984729334">Get a quote</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="bubbles" aria-hidden="true">
+    <span style="left:6%;width:46px;height:46px;animation-duration:9s"></span>
+    <span style="left:18%;width:26px;height:26px;animation-duration:7s;animation-delay:1.5s"></span>
+    <span style="left:34%;width:60px;height:60px;animation-duration:11s;animation-delay:.5s"></span>
+    <span style="left:52%;width:20px;height:20px;animation-duration:6s;animation-delay:2s"></span>
+    <span style="left:70%;width:38px;height:38px;animation-duration:10s;animation-delay:1s"></span>
+    <span style="left:84%;width:28px;height:28px;animation-duration:8s;animation-delay:.8s"></span>
+    <span style="left:92%;width:52px;height:52px;animation-duration:12s;animation-delay:2.4s"></span>
+  </div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <h1>Bringing your surfaces <span class="hl">back to life</span></h1>
+      <p>Professional pressure washing for driveways, patios and paving across South Yorkshire. Dirt, moss, weeds and grime — gone. Spotless results, every time.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="tel:+447984729334">📞 Call Jake — +44 7984 729334</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+      <div class="badges">
+        <div><span class="dot"></span> Free, no-obligation quotes</div>
+        <div><span class="dot"></span> Driveways &amp; patios</div>
+        <div><span class="dot"></span> Friendly local service</div>
+      </div>
+    </div>
+    <div class="hero-mascot">
+      <span class="splash-badge">FREE<br>QUOTES!</span>
+      <img src="images/logo.png" alt="Surface Pro Cleaning mascot giving a thumbs up with a pressure washer" />
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY (slider) -->
+<section id="gallery">
+  <div class="wrap">
+    <p class="eyebrow">Our work — see the difference</p>
+    <h2>Before &amp; after</h2>
+    <p class="lead">Real jobs across South Yorkshire. Swipe through a few recent transformations — then call Jake for a free quote.</p>
+
+    <div class="slider" id="slider">
+      <div class="slides" id="slides">
+        <figure class="slide">
+          <img data-img="1" src="images/1.webp" alt="Block-paved path before and after pressure washing" />
+          <figcaption><b>Path &amp; paving</b><span class="pill">Before / After</span></figcaption>
+        </figure>
+        <figure class="slide">
+          <img data-img="2" src="images/2.webp" alt="Courtyard patio before and after pressure washing" />
+          <figcaption><b>Patio restoration</b><span class="pill">Before / After</span></figcaption>
+        </figure>
+        <figure class="slide">
+          <img data-img="3" src="images/3.jpg" alt="Herringbone block driveway before and after pressure washing" />
+          <figcaption><b>Driveway clean</b><span class="pill">Before / After</span></figcaption>
+        </figure>
+      </div>
+      <button class="nav-btn prev" id="prev" aria-label="Previous photo">&#10094;</button>
+      <button class="nav-btn next" id="next" aria-label="Next photo">&#10095;</button>
+    </div>
+    <div class="dots" id="dots" role="tablist" aria-label="Gallery navigation"></div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section id="services">
+  <div class="wrap">
+    <p class="eyebrow">What we do</p>
+    <h2>Powerful cleaning, professional finish</h2>
+    <p class="lead">We use professional pressure-washing equipment to lift years of dirt, moss, algae and weeds out of your outdoor surfaces — restoring them to like-new. Whether it's a tired driveway or a grubby patio, we leave it looking its best.</p>
+
+    <div class="services">
+      <div class="card">
+        <div class="ico"><svg class="icn" viewBox="0 0 24 24"><path d="M4 20h16M6 16l4-9 4 9M3 20l3-7"/></svg></div>
+        <h3>Driveways</h3>
+        <p>Block paving, tarmac and concrete drives blasted clean and looking fresh.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg class="icn" viewBox="0 0 24 24"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div>
+        <h3>Patios &amp; Paving</h3>
+        <p>Slabs, flags and paths — moss and grime removed for a crisp, even finish.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg class="icn" viewBox="0 0 24 24"><path d="M12 3s5 4 5 9a5 5 0 0 1-10 0c0-5 5-9 5-9z"/></svg></div>
+        <h3>Moss &amp; Weed Removal</h3>
+        <p>We clear out the green stuff and weeds growing through the joints.</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg class="icn" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3>Free Quotes</h3>
+        <p>A quick chat and an honest price — no pressure, no obligation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="eyebrow" style="color:var(--yellow-bright)">Get in touch</p>
+      <h2>Ready for a fresh, clean finish?</h2>
+      <p class="lead">Give Jake a call for a free quote. We cover South Yorkshire and the surrounding area — happy to pop round and take a look.</p>
+    </div>
+    <div class="contact-card">
+      <div class="crow">
+        <div class="ci"><svg class="icn" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div><small>Call or text</small><b>+44 7984 729334</b></div>
+      </div>
+      <div class="crow">
+        <div class="ci"><svg class="icn" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div><small>Your contact</small><b>Jake</b></div>
+      </div>
+      <div class="crow">
+        <div class="ci"><svg class="icn" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><small>Area covered</small><b>South Yorkshire</b></div>
+      </div>
+      <div class="phone-big">
+        <a class="btn btn-primary" href="tel:+447984729334">Call now for a free quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>Surface Pro Cleaning</b> — Pressure Washing in South Yorkshire · Call Jake: +44 7984 729334
+    <div style="margin-top:.4rem">&copy; <span id="yr"></span> Surface Pro Cleaning. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Auto-pick whichever image format exists: webp, jpg, jpeg or png.
+  // Drop a file named e.g. "gallery-1.webp" (or .jpg/.png) into /images and it just works.
+  const EXTS = ['webp','jpg','jpeg','png'];
+  document.querySelectorAll('img[data-img]').forEach(img => {
+    const name = img.getAttribute('data-img');
+    let i = 0;
+    const tryNext = () => {
+      if (i >= EXTS.length) { img.onerror = null; return; }
+      img.src = 'images/' + name + '.' + EXTS[i++];
+    };
+    img.onerror = tryNext;
+    tryNext();
+  });
+
+  // ---- Before/after slider ----
+  (function(){
+    const track = document.getElementById('slides');
+    if(!track) return;
+    const slides = track.children;
+    const total = slides.length;
+    const dotsWrap = document.getElementById('dots');
+    let i = 0, timer = null;
+    const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+    for(let d=0; d<total; d++){
+      const b = document.createElement('button');
+      b.setAttribute('role','tab');
+      b.setAttribute('aria-label','Show photo '+(d+1));
+      b.addEventListener('click', ()=>{ go(d); restart(); });
+      dotsWrap.appendChild(b);
+    }
+    const dots = dotsWrap.children;
+
+    function go(n){
+      i = (n + total) % total;
+      track.style.transform = 'translateX(' + (-i*100) + '%)';
+      for(let k=0;k<total;k++) dots[k].classList.toggle('active', k===i);
+    }
+    function next(){ go(i+1); }
+    function prev(){ go(i-1); }
+    document.getElementById('next').addEventListener('click', ()=>{ next(); restart(); });
+    document.getElementById('prev').addEventListener('click', ()=>{ prev(); restart(); });
+
+    // keyboard
+    document.getElementById('slider').addEventListener('keydown', e=>{
+      if(e.key==='ArrowRight'){ next(); restart(); }
+      if(e.key==='ArrowLeft'){ prev(); restart(); }
+    });
+
+    // touch swipe
+    let x0=null;
+    track.addEventListener('touchstart', e=>{ x0=e.touches[0].clientX; stop(); }, {passive:true});
+    track.addEventListener('touchend', e=>{
+      if(x0===null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx)>40){ dx<0 ? next() : prev(); }
+      x0=null; restart();
+    }, {passive:true});
+
+    // gentle autoplay (off if user prefers reduced motion)
+    function start(){ if(!reduce) timer = setInterval(next, 5000); }
+    function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+    function restart(){ stop(); start(); }
+    const slider = document.getElementById('slider');
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+
+    go(0); start();
+  })();
+  const t = document.getElementById('menuToggle');
+  const l = document.getElementById('navLinks');
+  t.addEventListener('click', () => l.classList.toggle('open'));
+  l.querySelectorAll('a').forEach(a => a.addEventListener('click', () => l.classList.remove('open')));
+</script>
+
+</body>
+</html>
