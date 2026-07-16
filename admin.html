@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin — Surface Pro Cleaning</title>
+<style>
+  :root{
+    --blue-900:#003078;--blue-700:#0060c0;--sky:#60c0d8;
+    --yellow:#f0a800;--yellow-bright:#ffc02e;--ink:#0e1116;--muted:#5b6470;
+    --paper:#fff;--soft:#f3f7fb;--line:#e3eaf2;--shadow:0 10px 30px rgba(11,95,165,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--soft);line-height:1.6}
+  .top{background:var(--blue-900);color:#fff;padding:1rem 0}
+  .wrap{width:min(900px,92%);margin:0 auto}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .top b{font-size:1.1rem}
+  .top .who{font-size:.85rem;color:#bcd4ea}
+  .top a,.top button{color:#fff;font-weight:600;font-size:.9rem;background:none;
+    border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:.4rem 1rem;
+    cursor:pointer;text-decoration:none}
+  .top a:hover,.top button:hover{background:rgba(255,255,255,.12)}
+  main{padding:2rem 0 4rem}
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;
+    padding:1.6rem;margin-bottom:1.6rem;box-shadow:var(--shadow)}
+  h2{font-size:1.2rem;margin-bottom:.3rem}
+  .sub{color:var(--muted);font-size:.92rem;margin-bottom:1.2rem}
+  label{display:block;font-weight:600;font-size:.88rem;margin:.8rem 0 .3rem}
+  input[type=text],input[type=password],input[type=file]{
+    width:100%;padding:.7rem .8rem;border:1px solid var(--line);border-radius:10px;
+    font-size:.98rem;background:var(--soft)}
+  input:focus{outline:2px solid var(--yellow);border-color:transparent}
+  button.act{margin-top:1.2rem;padding:.75rem 1.4rem;border:0;border-radius:999px;
+    background:var(--yellow);color:var(--ink);font-weight:800;cursor:pointer;
+    transition:transform .15s ease}
+  button.act:hover{transform:translateY(-2px)}
+  button.act:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .msg{font-size:.9rem;margin-top:.8rem;min-height:1.1em}
+  .ok{color:#1e7a34}.err{color:#c0392b}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;margin-top:1rem}
+  figure{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--soft)}
+  figure img{display:block;width:100%;height:130px;object-fit:cover}
+  figcaption{font-size:.78rem;padding:.4rem .5rem;color:var(--muted);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  .del{position:absolute;top:.4rem;right:.4rem;width:28px;height:28px;border-radius:50%;
+    border:0;background:rgba(192,57,43,.92);color:#fff;font-size:1rem;cursor:pointer;
+    display:grid;place-items:center;line-height:1}
+  .del:hover{background:#c0392b}
+  .empty{color:var(--muted);font-size:.92rem;padding:.6rem 0}
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <div>
+        <b>Surface Pro Cleaning</b>
+        <span class="who" id="who"></span>
+      </div>
+      <div>
+        <a href="/" target="_blank">View site ↗</a>
+        <button id="logout">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Upload -->
+    <section class="panel">
+      <h2>Add a photo</h2>
+      <p class="sub">Uploaded photos appear in the gallery on the public site. JPG, PNG, WEBP or GIF, up to 10&nbsp;MB.</p>
+      <label for="file">Image</label>
+      <input id="file" type="file" accept="image/*" />
+      <label for="caption">Caption (optional)</label>
+      <input id="caption" type="text" maxlength="120" placeholder="e.g. Driveway clean — Doncaster" />
+      <button class="act" id="uploadBtn">Upload photo</button>
+      <div class="msg" id="uploadMsg"></div>
+    </section>
+
+    <!-- Gallery management -->
+    <section class="panel">
+      <h2>Gallery photos</h2>
+      <p class="sub">These are shown on the site, newest first. Remove any you don't want.</p>
+      <div id="gallery" class="grid"></div>
+      <div class="empty" id="galleryEmpty" hidden>No photos yet — upload one above.</div>
+    </section>
+
+    <!-- Change password -->
+    <section class="panel">
+      <h2>Change password</h2>
+      <p class="sub">Set a new password. Minimum 8 characters.</p>
+      <label for="current">Current password</label>
+      <input id="current" type="password" autocomplete="current-password" />
+      <label for="next">New password</label>
+      <input id="next" type="password" autocomplete="new-password" />
+      <label for="confirm">Confirm new password</label>
+      <input id="confirm" type="password" autocomplete="new-password" />
+      <button class="act" id="pwBtn">Update password</button>
+      <div class="msg" id="pwMsg"></div>
+    </section>
+  </main>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  // Redirect to login if the session isn't valid.
+  fetch('/api/me').then(r => {
+    if(!r.ok){ window.location.href = '/login'; return; }
+    return r.json();
+  }).then(d => { if(d) $('who').textContent = 'Signed in as ' + d.user; });
+
+  function setMsg(el, text, ok){
+    el.textContent = text;
+    el.className = 'msg ' + (ok ? 'ok' : 'err');
+  }
+
+  // ---- Gallery load / render ----
+  async function loadGallery(){
+    const r = await fetch('/api/images');
+    const imgs = await r.json();
+    const grid = $('gallery');
+    grid.innerHTML = '';
+    $('galleryEmpty').hidden = imgs.length > 0;
+    imgs.forEach(img => {
+      const fig = document.createElement('figure');
+      fig.innerHTML =
+        '<img src="' + img.url + '" alt="">' +
+        '<button class="del" title="Delete" data-id="' + img.id + '">&times;</button>' +
+        '<figcaption>' + (img.caption ? escapeHtml(img.caption) : '&nbsp;') + '</figcaption>';
+      grid.appendChild(fig);
+    });
+    grid.querySelectorAll('.del').forEach(btn => {
+      btn.addEventListener('click', () => del(btn.dataset.id));
+    });
+  }
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  async function del(id){
+    if(!confirm('Delete this photo?')) return;
+    const r = await fetch('/api/images/' + id + '/delete', { method:'POST' });
+    if(r.ok) loadGallery();
+  }
+
+  // ---- Upload ----
+  $('uploadBtn').addEventListener('click', async () => {
+    const file = $('file').files[0];
+    if(!file){ setMsg($('uploadMsg'), 'Choose an image first.', false); return; }
+    const fd = new FormData();
+    fd.append('image', file);
+    fd.append('caption', $('caption').value);
+    $('uploadBtn').disabled = true;
+    setMsg($('uploadMsg'), 'Uploading…', true);
+    try{
+      const r = await fetch('/api/upload', { method:'POST', body: fd });
+      const d = await r.json().catch(()=>({}));
+      if(r.ok){
+        setMsg($('uploadMsg'), 'Uploaded.', true);
+        $('file').value = ''; $('caption').value = '';
+        loadGallery();
+      } else {
+        setMsg($('uploadMsg'), d.error || 'Upload failed.', false);
+      }
+    }catch(e){ setMsg($('uploadMsg'), 'Network error.', false); }
+    $('uploadBtn').disabled = false;
+  });
+
+  // ---- Change password ----
+  $('pwBtn').addEventListener('click', async () => {
+    const current = $('current').value, next = $('next').value, confirm = $('confirm').value;
+    if(next !== confirm){ setMsg($('pwMsg'), 'New passwords do not match.', false); return; }
+    if(next.length < 8){ setMsg($('pwMsg'), 'New password must be at least 8 characters.', false); return; }
+    $('pwBtn').disabled = true;
+    try{
+      const r = await fetch('/api/change-password', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ current, next })
+      });
+      const d = await r.json().catch(()=>({}));
+      if(r.ok){
+        setMsg($('pwMsg'), 'Password updated.', true);
+        $('current').value = $('next').value = $('confirm').value = '';
+      } else {
+        setMsg($('pwMsg'), d.error || 'Could not update password.', false);
+      }
+    }catch(e){ setMsg($('pwMsg'), 'Network error.', false); }
+    $('pwBtn').disabled = false;
+  });
+
+  // ---- Logout ----
+  $('logout').addEventListener('click', async () => {
+    await fetch('/api/logout', { method:'POST' });
+    window.location.href = '/login';
+  });
+
+  loadGallery();
+</script>
+</body>
+</html>

@@ -283,25 +283,15 @@
     <h2>Before &amp; after</h2>
     <p class="lead">Real jobs across South Yorkshire. Swipe through a few recent transformations — then call Jake for a free quote.</p>
 
-    <div class="slider" id="slider">
-      <div class="slides" id="slides">
-        <figure class="slide">
-          <img data-img="1" src="images/1.webp" alt="Block-paved path before and after pressure washing" />
-          <figcaption><b>Path &amp; paving</b><span class="pill">Before / After</span></figcaption>
-        </figure>
-        <figure class="slide">
-          <img data-img="2" src="images/2.webp" alt="Courtyard patio before and after pressure washing" />
-          <figcaption><b>Patio restoration</b><span class="pill">Before / After</span></figcaption>
-        </figure>
-        <figure class="slide">
-          <img data-img="3" src="images/3.jpg" alt="Herringbone block driveway before and after pressure washing" />
-          <figcaption><b>Driveway clean</b><span class="pill">Before / After</span></figcaption>
-        </figure>
-      </div>
+    <div class="slider" id="slider" hidden>
+      <div class="slides" id="slides"></div>
       <button class="nav-btn prev" id="prev" aria-label="Previous photo">&#10094;</button>
       <button class="nav-btn next" id="next" aria-label="Next photo">&#10095;</button>
     </div>
     <div class="dots" id="dots" role="tablist" aria-label="Gallery navigation"></div>
+    <p class="lead" id="galleryEmpty" style="text-align:center;margin-top:1.5rem" hidden>
+      Photos coming soon — check back shortly.
+    </p>
   </div>
 </section>
 
@@ -368,7 +358,8 @@
 <footer>
   <div class="wrap">
     <b>Surface Pro Cleaning</b> — Pressure Washing in South Yorkshire · Call Jake: +44 7984 729334
-    <div style="margin-top:.4rem">&copy; <span id="yr"></span> Surface Pro Cleaning. All rights reserved.</div>
+    <div style="margin-top:.4rem">&copy; <span id="yr"></span> Surface Pro Cleaning. All rights reserved.
+      &middot; <a href="/login" style="color:#7f93a6">Admin</a></div>
   </div>
 </footer>
 
@@ -389,8 +380,42 @@
     tryNext();
   });
 
-  // ---- Before/after slider ----
-  (function(){
+  // ---- Before/after slider (images loaded from the server) ----
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  fetch('/api/images')
+    .then(r => r.ok ? r.json() : [])
+    .then(imgs => {
+      const track = document.getElementById('slides');
+      const slider = document.getElementById('slider');
+      const empty = document.getElementById('galleryEmpty');
+      if(!track) return;
+
+      if(!imgs.length){
+        if(empty) empty.hidden = false;
+        return;
+      }
+
+      // Build a slide per uploaded image.
+      track.innerHTML = imgs.map(img => (
+        '<figure class="slide">' +
+          '<img src="' + escapeHtml(img.url) + '" alt="' + escapeHtml(img.caption || 'Pressure washing job') + '" />' +
+          (img.caption
+            ? '<figcaption><b>' + escapeHtml(img.caption) + '</b><span class="pill">Our work</span></figcaption>'
+            : '') +
+        '</figure>'
+      )).join('');
+      slider.hidden = false;
+      initSlider();
+    })
+    .catch(() => {
+      const empty = document.getElementById('galleryEmpty');
+      if(empty) empty.hidden = false;
+    });
+
+  function initSlider(){
     const track = document.getElementById('slides');
     if(!track) return;
     const slides = track.children;
@@ -443,7 +468,7 @@
     slider.addEventListener('mouseleave', start);
 
     go(0); start();
-  })();
+  }
   const t = document.getElementById('menuToggle');
   const l = document.getElementById('navLinks');
   t.addEventListener('click', () => l.classList.toggle('open'));
