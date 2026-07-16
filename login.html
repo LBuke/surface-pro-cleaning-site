@@ -58,21 +58,17 @@
 <script>
   const $ = id => document.getElementById(id);
   const msg = $('msg');
-  // Backend API base. Empty (same-origin) when developing locally against the
-  // backend; the live personal.teddeh.com API when served from spcservices.uk.
-  const LOCAL = ['localhost','127.0.0.1'].includes(location.hostname);
-  const API = LOCAL ? '' : 'https://personal.teddeh.com';
   async function login(){
     msg.style.color = '#c0392b'; msg.textContent = '';
     const username = $('username').value.trim();
     const password = $('password').value;
     try{
-      const r = await fetch(API + '/api/login', {
-        method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      const r = await fetch('/api/login', {
+        method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ username, password })
       });
       const data = await r.json().catch(()=>({}));
-      if(r.ok){ window.location.href = 'admin.html'; return; }
+      if(r.ok){ window.location.href = '/admin'; return; }
       msg.textContent = data.error || 'Sign in failed.';
     }catch(e){ msg.textContent = 'Network error. Try again.'; }
   }
