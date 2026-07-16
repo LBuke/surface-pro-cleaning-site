@@ -103,9 +103,30 @@
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
   @keyframes pop{0%,100%{transform:rotate(-12deg) scale(1)}50%{transform:rotate(-12deg) scale(1.06)}}
   @keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.7}100%{transform:translateY(-440px);opacity:0}}
+
+  /* Floating wheelie bin + sparkling shop sign (same cartoon family as the logo) */
+  .wheelie-bin{
+    position:absolute;left:-18px;bottom:-4px;width:120px;z-index:3;
+    filter:drop-shadow(0 14px 16px rgba(0,16,40,.42));
+    animation:binFloat 4.6s ease-in-out infinite;
+  }
+  .shop-sign{
+    position:absolute;top:-8px;left:-10px;width:176px;z-index:4;
+    transform-origin:120px 16px;
+    filter:drop-shadow(0 12px 18px rgba(0,16,40,.42));
+    animation:signSway 5.5s ease-in-out infinite;
+  }
+  .shop-sign .spark{transform-box:fill-box;transform-origin:center;animation:twinkle 2.4s ease-in-out infinite}
+  @keyframes binFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-15px) rotate(3deg)}}
+  @keyframes signSway{0%,100%{transform:rotate(-3.5deg)}50%{transform:rotate(3.5deg)}}
+  @keyframes twinkle{0%,100%{opacity:0;transform:scale(.25)}45%{opacity:1;transform:scale(1)}}
+
   @media(prefers-reduced-motion:reduce){
-    .hero-mascot img,.splash-badge,.bubbles span{animation:none}
+    .hero-mascot img,.splash-badge,.bubbles span,
+    .wheelie-bin,.shop-sign,.shop-sign .spark{animation:none}
     .splash-badge{transform:rotate(-12deg)}
+    .shop-sign{transform:rotate(-3.5deg)}
+    .shop-sign .spark{opacity:1;transform:scale(1)}
   }
 
   /* ---------- Sections ---------- */
@@ -193,6 +214,8 @@
     .hero-mascot{order:-1}                 /* mascot up top on mobile = fun first impression */
     .hero-mascot img{width:min(280px,72%)}
     .splash-badge{width:84px;height:84px;font-size:.82rem;right:12%;top:-4px}
+    .shop-sign{width:126px;left:-2px;top:20px}
+    .wheelie-bin{width:92px;left:-4px}
     .hero h1{max-width:none;margin:0 auto}
     .hero p{margin:1rem auto 1.6rem}
     .hero-cta{justify-content:center}
@@ -210,6 +233,8 @@
     h2{font-size:1.45rem}
     .slider{max-width:100%}
     .nav-btn{width:40px;height:40px}
+    .shop-sign{display:none}
+    .wheelie-bin{width:74px;left:0}
   }
 
   @media(max-width:780px){
@@ -270,8 +295,37 @@
       </div>
     </div>
     <div class="hero-mascot">
+      <!-- Sparkling shop sign (freshly cleaned) -->
+      <svg class="shop-sign" viewBox="0 0 240 210" role="img" aria-label="Sparkling clean Surface Pro Cleaning shop sign" xmlns="http://www.w3.org/2000/svg">
+        <rect x="46" y="8" width="148" height="15" rx="7.5" fill="#0d1a2b"/>
+        <rect x="74" y="18" width="9" height="30" rx="4.5" fill="#0d1a2b"/>
+        <rect x="157" y="18" width="9" height="30" rx="4.5" fill="#0d1a2b"/>
+        <rect x="30" y="44" width="180" height="120" rx="20" fill="#0060c0" stroke="#0d1a2b" stroke-width="7"/>
+        <rect x="45" y="59" width="150" height="90" rx="13" fill="none" stroke="#ffc02e" stroke-width="6"/>
+        <text x="120" y="112" text-anchor="middle" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-weight="900" font-size="50" fill="#fff">SPC</text>
+        <text x="120" y="136" text-anchor="middle" font-family="'Segoe UI',system-ui,Arial,sans-serif" font-weight="700" font-size="12" letter-spacing="1.4" fill="#ffc02e">SURFACE PRO CLEANING</text>
+        <g transform="translate(196 58)"><path class="spark" style="animation-delay:0s" d="M0 -13 Q2 -2 13 0 Q2 2 0 13 Q-2 2 -13 0 Q-2 -2 0 -13 Z" fill="#fff"/></g>
+        <g transform="translate(58 150) scale(.7)"><path class="spark" style="animation-delay:.5s" d="M0 -13 Q2 -2 13 0 Q2 2 0 13 Q-2 2 -13 0 Q-2 -2 0 -13 Z" fill="#fff"/></g>
+        <g transform="translate(150 66) scale(.55)"><path class="spark" style="animation-delay:1s" d="M0 -13 Q2 -2 13 0 Q2 2 0 13 Q-2 2 -13 0 Q-2 -2 0 -13 Z" fill="#fff"/></g>
+        <g transform="translate(206 128) scale(.8)"><path class="spark" style="animation-delay:.8s" d="M0 -13 Q2 -2 13 0 Q2 2 0 13 Q-2 2 -13 0 Q-2 -2 0 -13 Z" fill="#fff"/></g>
+        <g transform="translate(40 98) scale(.6)"><path class="spark" style="animation-delay:1.4s" d="M0 -13 Q2 -2 13 0 Q2 2 0 13 Q-2 2 -13 0 Q-2 -2 0 -13 Z" fill="#fff"/></g>
+      </svg>
+
       <span class="splash-badge">FREE<br>QUOTES!</span>
       <img src="images/logo.png" alt="Surface Pro Cleaning mascot giving a thumbs up with a pressure washer" />
+
+      <!-- Floating wheelie bin -->
+      <svg class="wheelie-bin" viewBox="0 0 180 230" role="img" aria-label="Freshly cleaned wheelie bin" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="58" cy="202" r="18" fill="#0d1a2b"/>
+        <circle cx="58" cy="202" r="7.5" fill="#7f93a6"/>
+        <circle cx="126" cy="202" r="18" fill="#0d1a2b"/>
+        <circle cx="126" cy="202" r="7.5" fill="#7f93a6"/>
+        <path d="M34 76 L150 76 L138 196 L46 196 Z" fill="#0a63d6" stroke="#0d1a2b" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M75 82 L70 190 M110 82 L114 190" stroke="#0d1a2b" stroke-width="5" stroke-linecap="round" opacity=".45"/>
+        <path d="M52 88 C56 120 58 160 60 184" stroke="#eaf4ff" stroke-width="9" stroke-linecap="round" fill="none" opacity=".55"/>
+        <path d="M24 74 Q20 48 42 46 L138 46 Q160 48 156 74 Z" fill="#ffc02e" stroke="#0d1a2b" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M77 46 Q90 31 103 46" fill="none" stroke="#0d1a2b" stroke-width="7" stroke-linecap="round"/>
+      </svg>
     </div>
   </div>
 </section>
