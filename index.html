@@ -359,7 +359,7 @@
   <div class="wrap">
     <b>Surface Pro Cleaning</b> — Pressure Washing in South Yorkshire · Call Jacob: +44 7984 729334
     <div style="margin-top:.4rem">&copy; <span id="yr"></span> Surface Pro Cleaning. All rights reserved.
-      &middot; <a href="login.html" style="color:#7f93a6">Admin</a></div>
+      &middot; <a href="https://personal.teddeh.com/login" style="color:#7f93a6">Admin</a></div>
   </div>
 </footer>
 
@@ -406,7 +406,7 @@
       // Build a slide per uploaded image.
       track.innerHTML = imgs.map(img => (
         '<figure class="slide">' +
-          '<img src="' + escapeHtml(img.url) + '" alt="' + escapeHtml(img.caption || 'Pressure washing job') + '" />' +
+          '<img src="' + escapeHtml(API + img.url) + '" alt="' + escapeHtml(img.caption || 'Pressure washing job') + '" />' +
           (img.caption
             ? '<figcaption><b>' + escapeHtml(img.caption) + '</b><span class="pill">Our work</span></figcaption>'
             : '') +

@@ -130,7 +130,7 @@
     imgs.forEach(img => {
       const fig = document.createElement('figure');
       fig.innerHTML =
-        '<img src="' + img.url + '" alt="">' +
+        '<img src="' + (API + img.url) + '" alt="">' +
         '<button class="del" title="Delete" data-id="' + img.id + '">&times;</button>' +
         '<figcaption>' + (img.caption ? escapeHtml(img.caption) : '&nbsp;') + '</figcaption>';
       grid.appendChild(fig);
